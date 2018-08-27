@@ -64,7 +64,7 @@ namespace MergeMessage
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            var imputMessageParsingResult = _mTfsChangesetParsingService.Parse(InputMessageTextBox.Text);
+            var imputMessageParsingResult = _mTfsChangesetParsingService.Parse(InputMessageRichTextBox.Text);
             if (imputMessageParsingResult.HasErrors)
             {
                 var errorsForMessage = string.Join(Environment.NewLine, imputMessageParsingResult.Errors);
@@ -100,21 +100,37 @@ namespace MergeMessage
 
         private void MainForm_Activated(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(InputMessageTextBox.Text.Trim()))
+            if (!string.IsNullOrEmpty(InputMessageRichTextBox.Text.Trim()))
             {
                 return;
             }
 
-            var copiedText = Clipboard.GetText().Trim();
-            if (!string.IsNullOrEmpty(copiedText))
-            {
-                InputMessageTextBox.Text = copiedText;
-            }
+            PasteCopiedText();
         }
         
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            InputMessageRichTextBox.Text = string.Empty;
+        }
+
+        private void ReplaceButton_Click(object sender, EventArgs e)
+        {
+            InputMessageRichTextBox.Text = string.Empty;
+            PasteCopiedText();
+        }
+
+        private void PasteCopiedText()
+        {
+            var copiedText = Clipboard.GetText().Trim();
+            if (!string.IsNullOrEmpty(copiedText))
+            {
+                InputMessageRichTextBox.Text = copiedText;
+            }
         }
 
         private string BuildMergeMessage(ITfsChangeset parsedInputMessage, IBranch branch, string additionalText)

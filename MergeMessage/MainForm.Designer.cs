@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.InputMessageLabel = new System.Windows.Forms.Label();
-            this.InputMessageTextBox = new System.Windows.Forms.TextBox();
             this.FromBranchLabel = new System.Windows.Forms.Label();
             this.FromBranchComboBox = new System.Windows.Forms.ComboBox();
             this.FromBranchAdditionalLabel = new System.Windows.Forms.Label();
@@ -47,6 +46,9 @@
             this.CommitAuthorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CommitDateTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CommitMessageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClearButton = new System.Windows.Forms.Button();
+            this.ReplaceButton = new System.Windows.Forms.Button();
+            this.InputMessageRichTextBox = new System.Windows.Forms.RichTextBox();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CommitTable)).BeginInit();
             this.SuspendLayout();
@@ -59,14 +61,6 @@
             this.InputMessageLabel.Size = new System.Drawing.Size(104, 13);
             this.InputMessageLabel.TabIndex = 0;
             this.InputMessageLabel.Text = "Input origin message";
-            // 
-            // InputMessageTextBox
-            // 
-            this.InputMessageTextBox.Location = new System.Drawing.Point(16, 49);
-            this.InputMessageTextBox.Multiline = true;
-            this.InputMessageTextBox.Name = "InputMessageTextBox";
-            this.InputMessageTextBox.Size = new System.Drawing.Size(545, 50);
-            this.InputMessageTextBox.TabIndex = 1;
             // 
             // FromBranchLabel
             // 
@@ -220,11 +214,42 @@
             this.CommitMessageColumn.Name = "CommitMessageColumn";
             this.CommitMessageColumn.ReadOnly = true;
             // 
+            // ClearButton
+            // 
+            this.ClearButton.Location = new System.Drawing.Point(433, 105);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(61, 23);
+            this.ClearButton.TabIndex = 11;
+            this.ClearButton.Text = "Clear";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
+            // 
+            // ReplaceButton
+            // 
+            this.ReplaceButton.Location = new System.Drawing.Point(500, 105);
+            this.ReplaceButton.Name = "ReplaceButton";
+            this.ReplaceButton.Size = new System.Drawing.Size(61, 23);
+            this.ReplaceButton.TabIndex = 13;
+            this.ReplaceButton.Text = "Replace";
+            this.ReplaceButton.UseVisualStyleBackColor = true;
+            this.ReplaceButton.Click += new System.EventHandler(this.ReplaceButton_Click);
+            // 
+            // InputMessageTextBox
+            // 
+            this.InputMessageRichTextBox.Location = new System.Drawing.Point(16, 49);
+            this.InputMessageRichTextBox.Name = "InputMessageRichTextBox";
+            this.InputMessageRichTextBox.Size = new System.Drawing.Size(545, 50);
+            this.InputMessageRichTextBox.TabIndex = 14;
+            this.InputMessageRichTextBox.Text = "";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(573, 422);
+            this.Controls.Add(this.InputMessageRichTextBox);
+            this.Controls.Add(this.ReplaceButton);
+            this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.CommitTable);
             this.Controls.Add(this.CopyToClipboardButton);
             this.Controls.Add(this.ResultTextBox);
@@ -233,7 +258,6 @@
             this.Controls.Add(this.FromBranchAdditionalLabel);
             this.Controls.Add(this.FromBranchComboBox);
             this.Controls.Add(this.FromBranchLabel);
-            this.Controls.Add(this.InputMessageTextBox);
             this.Controls.Add(this.InputMessageLabel);
             this.Controls.Add(this.MenuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -255,7 +279,6 @@
         #endregion
 
         private System.Windows.Forms.Label InputMessageLabel;
-        private System.Windows.Forms.TextBox InputMessageTextBox;
         private System.Windows.Forms.Label FromBranchLabel;
         private System.Windows.Forms.ComboBox FromBranchComboBox;
         private System.Windows.Forms.Label FromBranchAdditionalLabel;
@@ -273,5 +296,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CommitAuthorColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn CommitDateTimeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn CommitMessageColumn;
+        private System.Windows.Forms.Button ClearButton;
+        private System.Windows.Forms.Button ReplaceButton;
+        private System.Windows.Forms.RichTextBox InputMessageRichTextBox;
     }
 }
