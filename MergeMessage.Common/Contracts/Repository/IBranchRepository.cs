@@ -1,6 +1,6 @@
 ﻿using MergeMessage.Common.Contracts.Models;
 
-namespace MergeMessage.Common.Contracts.Services
+namespace MergeMessage.Common.Contracts.Repository
 {
     public interface IBranchRepository
     {

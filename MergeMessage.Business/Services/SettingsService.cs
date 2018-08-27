@@ -14,10 +14,13 @@ namespace MergeMessage.Business.Services
     public class SettingsService : ISettingsService
     {
         private const string BranchSettingPrefix = "Branch:";
+        private const string MergeMessageFormatSettingPrefix = "MessageFormat:";
+
+        private const string DefaultMergeMessageFormat = "Merged #{0} from {1} for {2}";
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(SettingsService));
 
-        public IBranch[] TryParse(string filePath, out IList<string> errorMessages)
+        public IProgramSettings TryParse(string filePath, out IList<string> errorMessages)
         {
             errorMessages = new List<string>();
 
@@ -30,9 +33,11 @@ namespace MergeMessage.Business.Services
                 return null;
             }
 
-            var branches = ParseBranches(settingsLines).ToArray();
+            var settingsLinesArray = settingsLines.ToArray();
+            var branches = ParseBranches(settingsLinesArray).ToArray();
+            var mergeMessageFormat = ParseMergeMessageFormat(settingsLinesArray) ?? DefaultMergeMessageFormat;
 
-            return branches;
+            return new ProgramSettings(branches, mergeMessageFormat);
         }
 
         private static IEnumerable<string> TryReadSettingsFile(string filePath, out string errorMessage)
@@ -62,6 +67,13 @@ namespace MergeMessage.Business.Services
                     var additionalLabel = branchSplits.Length == 2 ? null : branchSplits[2];
                     return new Branch(branchSplits[0], branchSplits[1], additionalLabel);
                 });
+        }
+
+        private static string ParseMergeMessageFormat(IEnumerable<string> settingsLines)
+        {
+            return settingsLines
+                .FirstOrDefault(settingsLine => settingsLine.StartsWith(MergeMessageFormatSettingPrefix))
+                ?.Substring(MergeMessageFormatSettingPrefix.Length);
         }
     }
 }

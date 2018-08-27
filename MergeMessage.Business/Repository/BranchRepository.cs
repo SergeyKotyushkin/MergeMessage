@@ -2,7 +2,7 @@
 using System.Linq;
 
 using MergeMessage.Common.Contracts.Models;
-using MergeMessage.Common.Contracts.Services;
+using MergeMessage.Common.Contracts.Repository;
 
 namespace MergeMessage.Business.Repository
 {

@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using log4net;
 
 using MergeMessage.Common.Contracts.Models;
+using MergeMessage.Common.Contracts.Repository;
 using MergeMessage.Common.Contracts.Services;
 using MergeMessage.Common.Enums;
 using MergeMessage.Common.Models;
@@ -13,20 +14,24 @@ namespace MergeMessage
 {
     public partial class MainForm : Form
     {
-        private const string MergeMessageFormat = "Merged #{0} from {1} for {2}";
-
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainForm));
+        private readonly string _mergeMessageFormat;
 
         private readonly ITfsChangesetParsingService _mTfsChangesetParsingService;
         private readonly IBranchRepository _mBranchRepository;
         private readonly IAlertService _mAlertService;
 
-        public MainForm(ITfsChangesetParsingService mTfsChangesetParsingService, 
-            IBranchRepository mBranchRepository, IAlertService mAlertService)
+        public MainForm(
+            ITfsChangesetParsingService mTfsChangesetParsingService, 
+            IBranchRepository mBranchRepository, 
+            IAlertService mAlertService, 
+            IProgramSettingsRepository programSettingsRepository)
         {
             _mTfsChangesetParsingService = mTfsChangesetParsingService;
             _mBranchRepository = mBranchRepository;
             _mAlertService = mAlertService;
+
+            _mergeMessageFormat = programSettingsRepository.MergeMessageFormat;
 
             InitializeComponent();
         }
@@ -114,7 +119,7 @@ namespace MergeMessage
 
         private string BuildMergeMessage(ITfsChangeset parsedInputMessage, IBranch branch, string additionalText)
         {
-            return string.Format(MergeMessageFormat,
+            return string.Format(_mergeMessageFormat,
                 parsedInputMessage.Changeset,
                 BuildBranchPartMessage(branch, additionalText),
                 parsedInputMessage.Comment);

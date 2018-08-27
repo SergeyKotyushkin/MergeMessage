@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\Models\IAlertEntity.cs" />
+    <Compile Include="Contracts\Models\IProgramSettings.cs" />
+    <Compile Include="Contracts\Repository\IProgramSettingsRepository.cs" />
     <Compile Include="Contracts\Services\IAlertService.cs" />
-    <Compile Include="Contracts\Services\IBranchRepository.cs" />
+    <Compile Include="Contracts\Repository\IBranchRepository.cs" />
     <Compile Include="Contracts\Models\IBranch.cs" />
     <Compile Include="Contracts\Services\ISettingsService.cs" />
     <Compile Include="Contracts\Services\ITfsChangesetParsingService.cs" />
@@ -51,6 +53,7 @@
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Contracts\Models\ITfsChangesetParsingResult.cs" />
     <Compile Include="Contracts\Models\ITfsChangeset.cs" />
+    <Compile Include="Models\ProgramSettings.cs" />
     <Compile Include="Models\TfsChangesetParsingResult.cs" />
     <Compile Include="Models\TfsChangeset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

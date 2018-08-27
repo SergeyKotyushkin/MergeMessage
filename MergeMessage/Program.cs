@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using log4net;
 
 using MergeMessage.Business.Initialization;
+using MergeMessage.Common.Contracts.Repository;
 using MergeMessage.Common.Contracts.Services;
 using MergeMessage.Common.Enums;
 using MergeMessage.Common.Models;
@@ -46,6 +47,7 @@ namespace MergeMessage
         {
             var settingsService = _container.GetInstance<ISettingsService>();
             var alertService = _container.GetInstance<IAlertService>();
+            var programSettingsRepository = _container.GetInstance<IProgramSettingsRepository>();
 
             var directoryName = Path.GetDirectoryName(Application.ExecutablePath);
             if (directoryName == null)
@@ -59,7 +61,14 @@ namespace MergeMessage
             var settingsFilePath = Path.Combine(directoryName, SettingsFileName);
 
             IList<string> errorMessages;
-            var branches = settingsService.TryParse(settingsFilePath, out errorMessages);
+            var settings = settingsService.TryParse(settingsFilePath, out errorMessages);
+            if (settings == null)
+            {
+                const string errorMessage = "Some errors have been occured on settings file parsing";
+                alertService.Alert(new AlertEntity("Error", errorMessage, AlertType.Error));
+                Logger.Error(errorMessage);
+                return false;
+            }
 
             if (errorMessages.Count > 0)
             {
@@ -69,12 +78,8 @@ namespace MergeMessage
                 Logger.Error(errorMessage);
                 return false;
             }
-
-            var branchRepository = _container.GetInstance<IBranchRepository>();
-            foreach (var branch in branches)
-            {
-                branchRepository.Save(branch);
-            }
+            
+            programSettingsRepository.SaveSettings(settings);
 
             return true;
         }

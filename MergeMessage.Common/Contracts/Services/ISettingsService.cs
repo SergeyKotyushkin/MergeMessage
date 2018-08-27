@@ -6,6 +6,6 @@ namespace MergeMessage.Common.Contracts.Services
 {
     public interface ISettingsService
     {
-        IBranch[] TryParse(string filePath, out IList<string> errorMessages);
+        IProgramSettings TryParse(string filePath, out IList<string> errorMessages);
     }
 }
