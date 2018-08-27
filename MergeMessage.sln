@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeMessage", "MergeMessage\MergeMessage.csproj", "{56381659-30E0-4D6C-846C-25877C5CA246}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeMessage.Business", "MergeMessage.Business\MergeMessage.Business.csproj", "{A53D1FA0-2F08-4A56-8845-267E432325E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeMessage.Common", "MergeMessage.Common\MergeMessage.Common.csproj", "{8FF49583-53BA-44D2-B4FC-10813ECA29DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56381659-30E0-4D6C-846C-25877C5CA246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56381659-30E0-4D6C-846C-25877C5CA246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56381659-30E0-4D6C-846C-25877C5CA246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56381659-30E0-4D6C-846C-25877C5CA246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A53D1FA0-2F08-4A56-8845-267E432325E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A53D1FA0-2F08-4A56-8845-267E432325E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A53D1FA0-2F08-4A56-8845-267E432325E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A53D1FA0-2F08-4A56-8845-267E432325E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FF49583-53BA-44D2-B4FC-10813ECA29DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FF49583-53BA-44D2-B4FC-10813ECA29DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FF49583-53BA-44D2-B4FC-10813ECA29DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FF49583-53BA-44D2-B4FC-10813ECA29DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
