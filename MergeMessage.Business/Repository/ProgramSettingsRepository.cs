@@ -1,6 +1,7 @@
 ﻿using System;
 using MergeMessage.Common.Contracts.Models;
 using MergeMessage.Common.Contracts.Repository;
+using MergeMessage.Common.Enums;
 
 namespace MergeMessage.Business.Repository
 {
@@ -17,6 +18,8 @@ namespace MergeMessage.Business.Repository
 
         public string MergeMessageFormat { get; private set; }
 
+        public ProgramMode ProgramMode { get; set; }
+
         public void SaveSettings(IProgramSettings settings)
         {
             if (settings == null)
@@ -31,6 +34,7 @@ namespace MergeMessage.Business.Repository
             }
 
             MergeMessageFormat = settings.MergeMessageFormat;
+            ProgramMode = settings.ProgramMode;
         }
     }
 }

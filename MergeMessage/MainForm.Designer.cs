@@ -49,6 +49,9 @@
             this.ClearButton = new System.Windows.Forms.Button();
             this.ReplaceButton = new System.Windows.Forms.Button();
             this.InputMessageRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.ModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SingleModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MultiModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CommitTable)).BeginInit();
             this.SuspendLayout();
@@ -140,6 +143,7 @@
             // MenuToolStripMenuItem
             // 
             this.MenuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ModeToolStripMenuItem,
             this.ExitToolStripMenuItem});
             this.MenuToolStripMenuItem.Name = "MenuToolStripMenuItem";
             this.MenuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
@@ -148,7 +152,7 @@
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ExitToolStripMenuItem.Text = "Exit";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -234,13 +238,38 @@
             this.ReplaceButton.UseVisualStyleBackColor = true;
             this.ReplaceButton.Click += new System.EventHandler(this.ReplaceButton_Click);
             // 
-            // InputMessageTextBox
+            // InputMessageRichTextBox
             // 
             this.InputMessageRichTextBox.Location = new System.Drawing.Point(16, 49);
             this.InputMessageRichTextBox.Name = "InputMessageRichTextBox";
             this.InputMessageRichTextBox.Size = new System.Drawing.Size(545, 50);
             this.InputMessageRichTextBox.TabIndex = 14;
             this.InputMessageRichTextBox.Text = "";
+            // 
+            // ModeToolStripMenuItem
+            // 
+            this.ModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SingleModeToolStripMenuItem,
+            this.MultiModeToolStripMenuItem});
+            this.ModeToolStripMenuItem.Name = "ModeToolStripMenuItem";
+            this.ModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ModeToolStripMenuItem.Text = "Mode";
+            // 
+            // SingleModeToolStripMenuItem
+            // 
+            this.SingleModeToolStripMenuItem.Checked = true;
+            this.SingleModeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.SingleModeToolStripMenuItem.Name = "SingleModeToolStripMenuItem";
+            this.SingleModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.SingleModeToolStripMenuItem.Text = "SingleMode";
+            this.SingleModeToolStripMenuItem.Click += new System.EventHandler(this.CurrentModeClick);
+            // 
+            // MultiModeToolStripMenuItem
+            // 
+            this.MultiModeToolStripMenuItem.Name = "MultiModeToolStripMenuItem";
+            this.MultiModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.MultiModeToolStripMenuItem.Text = "MultiMode";
+            this.MultiModeToolStripMenuItem.Click += new System.EventHandler(this.CurrentModeClick);
             // 
             // MainForm
             // 
@@ -299,5 +328,8 @@
         private System.Windows.Forms.Button ClearButton;
         private System.Windows.Forms.Button ReplaceButton;
         private System.Windows.Forms.RichTextBox InputMessageRichTextBox;
+        private System.Windows.Forms.ToolStripMenuItem ModeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SingleModeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MultiModeToolStripMenuItem;
     }
 }

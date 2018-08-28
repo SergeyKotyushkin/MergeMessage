@@ -49,6 +49,7 @@
     <Compile Include="Contracts\Services\ISettingsService.cs" />
     <Compile Include="Contracts\Services\ITfsChangesetParsingService.cs" />
     <Compile Include="Enums\AlertType.cs" />
+    <Compile Include="Enums\ProgramMode.cs" />
     <Compile Include="Models\AlertEntity.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Contracts\Models\ITfsChangesetParsingResult.cs" />

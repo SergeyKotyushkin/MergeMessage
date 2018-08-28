@@ -20,6 +20,7 @@ namespace MergeMessage
         private readonly ITfsChangesetParsingService _mTfsChangesetParsingService;
         private readonly IBranchRepository _mBranchRepository;
         private readonly IAlertService _mAlertService;
+        private readonly IProgramSettingsRepository _programSettingsRepository;
 
         public MainForm(
             ITfsChangesetParsingService mTfsChangesetParsingService, 
@@ -30,14 +31,16 @@ namespace MergeMessage
             _mTfsChangesetParsingService = mTfsChangesetParsingService;
             _mBranchRepository = mBranchRepository;
             _mAlertService = mAlertService;
+            _programSettingsRepository = programSettingsRepository;
 
-            _mergeMessageFormat = programSettingsRepository.MergeMessageFormat;
+            _mergeMessageFormat = _programSettingsRepository.MergeMessageFormat;
 
             InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            SetMode(true);
             var branches = _mBranchRepository.GetAll();
             if (branches.Length > 0)
             {
@@ -124,6 +127,17 @@ namespace MergeMessage
             PasteCopiedText();
         }
 
+        private void CurrentModeClick(object sender, EventArgs e)
+        {
+            var modeItem = sender as ToolStripMenuItem;
+            if (modeItem == null || modeItem.Checked)
+            {
+                return;
+            }
+
+            SetMode(sender == SingleModeToolStripMenuItem);
+        }
+
         private void PasteCopiedText()
         {
             var copiedText = Clipboard.GetText().Trim();
@@ -160,6 +174,14 @@ namespace MergeMessage
                 parsedInputMessage.User,
                 parsedInputMessage.Date,
                 parsedInputMessage.Comment);
+        }
+
+        private void SetMode(bool isSingle)
+        {
+            SingleModeToolStripMenuItem.Checked = isSingle;
+            MultiModeToolStripMenuItem.Checked = !isSingle;
+
+            _programSettingsRepository.ProgramMode = isSingle ? ProgramMode.Single : ProgramMode.Multi;
         }
     }
 }
