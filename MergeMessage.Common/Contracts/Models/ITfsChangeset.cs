@@ -2,12 +2,14 @@
 {
     public interface ITfsChangeset
     {
-        string Changeset { get; }
+        string ChangesetNumber { get; }
 
         string User { get; }
 
         string Date { get; }
 
         string Comment { get; }
+
+        string TaskNumber { get; }
     }
 }

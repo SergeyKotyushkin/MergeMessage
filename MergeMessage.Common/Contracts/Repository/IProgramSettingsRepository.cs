@@ -7,7 +7,11 @@ namespace MergeMessage.Common.Contracts.Repository
     {
         IBranch[] Branches { get; }
 
-        string MergeMessageFormat { get; }
+        string SingleModeMergeMessageFormat { get; }
+
+        string MultiModeMergeMessageFormat { get; }
+
+        string ChangesetNumberFormat { get; }
 
         ProgramMode ProgramMode { get; set; }
 

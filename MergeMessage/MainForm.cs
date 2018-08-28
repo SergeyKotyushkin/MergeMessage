@@ -16,25 +16,25 @@ namespace MergeMessage
     public partial class MainForm : Form
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainForm));
-        private readonly string _mergeMessageFormat;
 
         private readonly ITfsChangesetParsingService _mTfsChangesetParsingService;
         private readonly IBranchRepository _mBranchRepository;
         private readonly IAlertService _mAlertService;
         private readonly IProgramSettingsRepository _programSettingsRepository;
+        private readonly IBuildMergeMessageService _buildMergeMessageService;
 
         public MainForm(
             ITfsChangesetParsingService mTfsChangesetParsingService, 
             IBranchRepository mBranchRepository, 
             IAlertService mAlertService, 
-            IProgramSettingsRepository programSettingsRepository)
+            IProgramSettingsRepository programSettingsRepository, 
+            IBuildMergeMessageService buildMergeMessageService)
         {
             _mTfsChangesetParsingService = mTfsChangesetParsingService;
             _mBranchRepository = mBranchRepository;
             _mAlertService = mAlertService;
             _programSettingsRepository = programSettingsRepository;
-
-            _mergeMessageFormat = _programSettingsRepository.MergeMessageFormat;
+            _buildMergeMessageService = buildMergeMessageService;
 
             InitializeComponent();
         }
@@ -94,7 +94,7 @@ namespace MergeMessage
 
             var additionalText = FromBranchAdditionalTextBox.Text;
 
-            var mergeMessages = BuildMergeMessages(imputMessageParsingResult.TfsCommitLines, targetBranch, additionalText);
+            var mergeMessages = _buildMergeMessageService.Build(imputMessageParsingResult.TfsCommitLines, targetBranch, additionalText);
             ResultRichTextBox.Text = string.Join(Environment.NewLine, mergeMessages);
 
             ResetCommitTable(imputMessageParsingResult.TfsCommitLines);
@@ -153,30 +153,6 @@ namespace MergeMessage
             }
         }
 
-        private string[] BuildMergeMessages(IList<ITfsChangeset> parsedInputMessages, IBranch branch, string additionalText)
-        {
-            var builtMergeMessages = new string[parsedInputMessages.Count];
-            for (var i = 0; i < parsedInputMessages.Count; i++)
-            {
-                builtMergeMessages[i] = BuildMergeMessage(parsedInputMessages[i], branch, additionalText);
-            }
-
-            return builtMergeMessages;
-        }
-
-        private string BuildMergeMessage(ITfsChangeset parsedInputMessage, IBranch branch, string additionalText)
-        {
-            return string.Format(_mergeMessageFormat,
-                parsedInputMessage.Changeset,
-                BuildBranchPartMessage(branch, additionalText),
-                parsedInputMessage.Comment);
-        }
-
-        private string BuildBranchPartMessage(IBranch branch, string additionalText)
-        {
-            return string.Format(branch.Format, additionalText);
-        }
-
         private void ResetCommitTable(IList<ITfsChangeset> parsedInputMessages)
         {
             CommitTable.Rows.Clear();
@@ -190,9 +166,10 @@ namespace MergeMessage
             foreach (var parsedInputMessage in parsedInputMessages)
             {
                 CommitTable.Rows.Add(
-                    parsedInputMessage.Changeset,
+                    parsedInputMessage.ChangesetNumber,
                     parsedInputMessage.User,
                     parsedInputMessage.Date,
+                    parsedInputMessage.TaskNumber,
                     parsedInputMessage.Comment);
             }
         }

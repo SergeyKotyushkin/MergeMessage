@@ -22,6 +22,7 @@ namespace MergeMessage.Business.Initialization
             For<ISettingsService>().Use<SettingsService>();
             For<ITfsChangesetParsingService>().Use<TfsChangesetParsingService>();
             For<IAlertService>().Use<WindowsMessageBoxAlertService>();
+            For<IBuildMergeMessageService>().Use<BuildMergeMessageService>();
         }
     }
 }

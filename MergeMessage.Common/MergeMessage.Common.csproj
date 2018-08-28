@@ -46,6 +46,7 @@
     <Compile Include="Contracts\Services\IAlertService.cs" />
     <Compile Include="Contracts\Repository\IBranchRepository.cs" />
     <Compile Include="Contracts\Models\IBranch.cs" />
+    <Compile Include="Contracts\Services\IBuildMergeMessageService.cs" />
     <Compile Include="Contracts\Services\ISettingsService.cs" />
     <Compile Include="Contracts\Services\ITfsChangesetParsingService.cs" />
     <Compile Include="Enums\AlertType.cs" />

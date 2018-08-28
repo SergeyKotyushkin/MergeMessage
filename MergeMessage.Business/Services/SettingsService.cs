@@ -14,9 +14,13 @@ namespace MergeMessage.Business.Services
     public class SettingsService : ISettingsService
     {
         private const string BranchSettingPrefix = "Branch:";
-        private const string MergeMessageFormatSettingPrefix = "MessageFormat:";
+        private const string SingleModeMergeMessageFormatSettingPrefix = "SingleModeMessageFormat:";
+        private const string MultiModeMergeMessageFormatSettingPrefix = "MultiModeMessageFormat:";
+        private const string ChangesetNumberFormatSettingPrefix = "ChangesetNumberFormat:";
 
-        private const string DefaultMergeMessageFormat = "Merged #{0} from {1} for {2}";
+        private const string DefaultSingleModeMergeMessageFormat = "Merged {0} from {1} for {2}";
+        private const string DefaultMultiModeMergeMessageFormat = "Merged {0} from {1} for {2}";
+        private const string DefaultChangesetNumberFormat = "#{0}";
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(SettingsService));
 
@@ -35,9 +39,21 @@ namespace MergeMessage.Business.Services
 
             var settingsLinesArray = settingsLines.ToArray();
             var branches = ParseBranches(settingsLinesArray).ToArray();
-            var mergeMessageFormat = ParseMergeMessageFormat(settingsLinesArray) ?? DefaultMergeMessageFormat;
+            var singleModeMergeMessageFormat =
+                ParseStringLineSetting(settingsLinesArray, SingleModeMergeMessageFormatSettingPrefix) ??
+                DefaultSingleModeMergeMessageFormat;
+            var multiModeMergeMessageFormat =
+                ParseStringLineSetting(settingsLinesArray, MultiModeMergeMessageFormatSettingPrefix) ??
+                DefaultMultiModeMergeMessageFormat;
+            var changesetNumberFormat =
+                ParseStringLineSetting(settingsLinesArray, ChangesetNumberFormatSettingPrefix) ??
+                DefaultChangesetNumberFormat;
 
-            return new ProgramSettings(branches, mergeMessageFormat);
+            return new ProgramSettings(
+                branches,
+                singleModeMergeMessageFormat,
+                multiModeMergeMessageFormat,
+                changesetNumberFormat);
         }
 
         private static IEnumerable<string> TryReadSettingsFile(string filePath, out string errorMessage)
@@ -69,11 +85,11 @@ namespace MergeMessage.Business.Services
                 });
         }
 
-        private static string ParseMergeMessageFormat(IEnumerable<string> settingsLines)
+        private static string ParseStringLineSetting(IEnumerable<string> settingsLines, string prefix)
         {
             return settingsLines
-                .FirstOrDefault(settingsLine => settingsLine.StartsWith(MergeMessageFormatSettingPrefix))
-                ?.Substring(MergeMessageFormatSettingPrefix.Length);
+                .FirstOrDefault(settingsLine => settingsLine.StartsWith(prefix))
+                ?.Substring(prefix.Length);
         }
     }
 }

@@ -87,8 +87,14 @@ namespace MergeMessage.Business.Services
             
             if (inputMessageSplits.Length > 3)
             {
-                parsedCommitMessage = inputMessageSplits[3]
-                    .Substring(inputMessageSplits[3].IndexOf("VW-", StringComparison.InvariantCulture)).Trim();
+                var commitMessageNumberIndex = inputMessageSplits[3].IndexOf("VW-", StringComparison.InvariantCulture);
+                if (commitMessageNumberIndex == -1)
+                {
+                    errorMessage = "could not find a Commit Message Number from the Input Message";
+                    return null;
+                }
+
+                parsedCommitMessage = inputMessageSplits[3].Substring(commitMessageNumberIndex).Trim();
             }
             else
             {
@@ -96,7 +102,14 @@ namespace MergeMessage.Business.Services
                 return null;
             }
 
-            return new TfsChangeset(parsedCommitNumber, parsedAuthor, dateTimeString, parsedCommitMessage);
+            var parsedCommitTaskNumber = ParseCommitTaskNumber(parsedCommitMessage);
+
+            return new TfsChangeset(
+                parsedCommitNumber, 
+                parsedAuthor, 
+                dateTimeString, 
+                parsedCommitMessage,
+                parsedCommitTaskNumber);
         }
 
         private static ITfsChangesetParsingResult CreateErrorResult(string message)
@@ -105,6 +118,18 @@ namespace MergeMessage.Business.Services
 
             var errors = new List<string>(1) {message};
             return new TfsChangesetParsingResult {Errors = errors};
+        }
+
+        private static string ParseCommitTaskNumber(string parsedCommitMessage)
+        {
+            var parsedCommitTaskNumber = parsedCommitMessage.Split(' ').FirstOrDefault() ?? string.Empty;
+            var endTaskNumberIndex = parsedCommitTaskNumber.LastIndexOfAny("0123456789".ToCharArray());
+            if (endTaskNumberIndex == -1)
+            {
+                return parsedCommitTaskNumber;
+            }
+
+            return parsedCommitTaskNumber.Substring(0, endTaskNumberIndex + 1);
         }
     }
 }

@@ -16,7 +16,11 @@ namespace MergeMessage.Business.Repository
 
         public IBranch[] Branches { get; private set; }
 
-        public string MergeMessageFormat { get; private set; }
+        public string SingleModeMergeMessageFormat { get; private set; }
+
+        public string MultiModeMergeMessageFormat { get; private set; }
+
+        public string ChangesetNumberFormat { get; private set; }
 
         public ProgramMode ProgramMode { get; set; }
 
@@ -33,7 +37,9 @@ namespace MergeMessage.Business.Repository
                 _branchRepository.Save(branch);
             }
 
-            MergeMessageFormat = settings.MergeMessageFormat;
+            SingleModeMergeMessageFormat = settings.SingleModeMergeMessageFormat;
+            MultiModeMergeMessageFormat = settings.MultiModeMergeMessageFormat;
+            ChangesetNumberFormat = settings.ChangesetNumberFormat;
             ProgramMode = settings.ProgramMode;
         }
     }
