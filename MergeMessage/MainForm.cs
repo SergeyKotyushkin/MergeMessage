@@ -41,7 +41,7 @@ namespace MergeMessage
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            SetMode(true);
+            SetMode(ProgramMode.Single);
             var branches = _mBranchRepository.GetAll();
             if (branches.Length > 0)
             {
@@ -131,15 +131,17 @@ namespace MergeMessage
             PasteCopiedText();
         }
 
-        private void CurrentModeClick(object sender, EventArgs e)
+        private void RadioButtonModeChecked(object sender, EventArgs e)
         {
-            var modeItem = sender as ToolStripMenuItem;
-            if (modeItem == null || modeItem.Checked)
+            var radioButton = sender as RadioButton;
+            if (radioButton == null || !radioButton.Checked)
             {
                 return;
             }
 
-            SetMode(sender == SingleModeToolStripMenuItem);
+            var isSingle = radioButton == SingleModeRadioButton;
+            var mode = isSingle ? ProgramMode.Single : ProgramMode.Multi;
+            SetMode(mode);
         }
 
         private void PasteCopiedText()
@@ -195,12 +197,18 @@ namespace MergeMessage
             }
         }
 
-        private void SetMode(bool isSingle)
+        private void SetMode(ProgramMode mode)
         {
-            SingleModeToolStripMenuItem.Checked = isSingle;
-            MultiModeToolStripMenuItem.Checked = !isSingle;
+            _programSettingsRepository.ProgramMode = mode;
 
-            _programSettingsRepository.ProgramMode = isSingle ? ProgramMode.Single : ProgramMode.Multi;
+            if (mode == ProgramMode.Single)
+            {
+                SingleModeRadioButton.Checked = true;
+            }
+            else
+            {
+                MultiModeRadioButton.Checked = true;
+            }
         }
     }
 }

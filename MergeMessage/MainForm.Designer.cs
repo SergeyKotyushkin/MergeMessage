@@ -37,9 +37,6 @@
             this.CopyToClipboardButton = new System.Windows.Forms.Button();
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.MenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SingleModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MultiModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +49,9 @@
             this.ReplaceButton = new System.Windows.Forms.Button();
             this.InputMessageRichTextBox = new System.Windows.Forms.RichTextBox();
             this.ResultRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.CurrentModeLabel = new System.Windows.Forms.Label();
+            this.SingleModeRadioButton = new System.Windows.Forms.RadioButton();
+            this.MultiModeRadioButton = new System.Windows.Forms.RadioButton();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CommitTable)).BeginInit();
             this.SuspendLayout();
@@ -134,36 +134,10 @@
             // MenuToolStripMenuItem
             // 
             this.MenuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ModeToolStripMenuItem,
             this.ExitToolStripMenuItem});
             this.MenuToolStripMenuItem.Name = "MenuToolStripMenuItem";
             this.MenuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.MenuToolStripMenuItem.Text = "Menu";
-            // 
-            // ModeToolStripMenuItem
-            // 
-            this.ModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SingleModeToolStripMenuItem,
-            this.MultiModeToolStripMenuItem});
-            this.ModeToolStripMenuItem.Name = "ModeToolStripMenuItem";
-            this.ModeToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
-            this.ModeToolStripMenuItem.Text = "Mode";
-            // 
-            // SingleModeToolStripMenuItem
-            // 
-            this.SingleModeToolStripMenuItem.Checked = true;
-            this.SingleModeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.SingleModeToolStripMenuItem.Name = "SingleModeToolStripMenuItem";
-            this.SingleModeToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-            this.SingleModeToolStripMenuItem.Text = "SingleMode";
-            this.SingleModeToolStripMenuItem.Click += new System.EventHandler(this.CurrentModeClick);
-            // 
-            // MultiModeToolStripMenuItem
-            // 
-            this.MultiModeToolStripMenuItem.Name = "MultiModeToolStripMenuItem";
-            this.MultiModeToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-            this.MultiModeToolStripMenuItem.Text = "MultiMode";
-            this.MultiModeToolStripMenuItem.Click += new System.EventHandler(this.CurrentModeClick);
             // 
             // ExitToolStripMenuItem
             // 
@@ -271,11 +245,47 @@
             this.ResultRichTextBox.Text = "";
             this.ResultRichTextBox.WordWrap = false;
             // 
+            // CurrentModeLabel
+            // 
+            this.CurrentModeLabel.AutoSize = true;
+            this.CurrentModeLabel.Location = new System.Drawing.Point(487, 194);
+            this.CurrentModeLabel.Name = "CurrentModeLabel";
+            this.CurrentModeLabel.Size = new System.Drawing.Size(34, 13);
+            this.CurrentModeLabel.TabIndex = 16;
+            this.CurrentModeLabel.Text = "Mode";
+            // 
+            // SingleModeRadioButton
+            // 
+            this.SingleModeRadioButton.AutoSize = true;
+            this.SingleModeRadioButton.Checked = true;
+            this.SingleModeRadioButton.Location = new System.Drawing.Point(527, 192);
+            this.SingleModeRadioButton.Name = "SingleModeRadioButton";
+            this.SingleModeRadioButton.Size = new System.Drawing.Size(52, 17);
+            this.SingleModeRadioButton.TabIndex = 17;
+            this.SingleModeRadioButton.TabStop = true;
+            this.SingleModeRadioButton.Text = "single";
+            this.SingleModeRadioButton.UseVisualStyleBackColor = true;
+            this.SingleModeRadioButton.CheckedChanged += new System.EventHandler(this.RadioButtonModeChecked);
+            // 
+            // MultiModeRadioButton
+            // 
+            this.MultiModeRadioButton.AutoSize = true;
+            this.MultiModeRadioButton.Location = new System.Drawing.Point(585, 192);
+            this.MultiModeRadioButton.Name = "MultiModeRadioButton";
+            this.MultiModeRadioButton.Size = new System.Drawing.Size(46, 17);
+            this.MultiModeRadioButton.TabIndex = 18;
+            this.MultiModeRadioButton.Text = "multi";
+            this.MultiModeRadioButton.UseVisualStyleBackColor = true;
+            this.MultiModeRadioButton.CheckedChanged += new System.EventHandler(this.RadioButtonModeChecked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(643, 478);
+            this.Controls.Add(this.MultiModeRadioButton);
+            this.Controls.Add(this.SingleModeRadioButton);
+            this.Controls.Add(this.CurrentModeLabel);
             this.Controls.Add(this.ResultRichTextBox);
             this.Controls.Add(this.InputMessageRichTextBox);
             this.Controls.Add(this.ReplaceButton);
@@ -327,9 +337,9 @@
         private System.Windows.Forms.Button ClearButton;
         private System.Windows.Forms.Button ReplaceButton;
         private System.Windows.Forms.RichTextBox InputMessageRichTextBox;
-        private System.Windows.Forms.ToolStripMenuItem ModeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem SingleModeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem MultiModeToolStripMenuItem;
         private System.Windows.Forms.RichTextBox ResultRichTextBox;
+        private System.Windows.Forms.Label CurrentModeLabel;
+        private System.Windows.Forms.RadioButton SingleModeRadioButton;
+        private System.Windows.Forms.RadioButton MultiModeRadioButton;
     }
 }
