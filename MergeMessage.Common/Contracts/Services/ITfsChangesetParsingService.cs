@@ -4,6 +4,6 @@ namespace MergeMessage.Common.Contracts.Services
 {
     public interface ITfsChangesetParsingService
     {
-        ITfsChangesetParsingResult Parse(string inputMessage);
+        ITfsChangesetParsingResult Parse(string inputMessages);
     }
 }

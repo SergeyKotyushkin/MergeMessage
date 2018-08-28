@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -67,12 +68,15 @@ namespace MergeMessage
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
+            ResultRichTextBox.Text = string.Empty;
+            CommitTable.Rows.Clear();
+
             var imputMessageParsingResult = _mTfsChangesetParsingService.Parse(InputMessageRichTextBox.Text);
             if (imputMessageParsingResult.HasErrors)
             {
                 var errorsForMessage = string.Join(Environment.NewLine, imputMessageParsingResult.Errors);
                 var errorMessage =
-                    $"Some errors have been occured on parsing input message:{Environment.NewLine}{errorsForMessage}";
+                    $"Some errors have been occured on parsing input message.{Environment.NewLine}{Environment.NewLine}{errorsForMessage}";
                 Logger.Warn(errorMessage);
                 _mAlertService.Alert(new AlertEntity("Error", errorMessage, AlertType.Error));
                 return;
@@ -90,15 +94,15 @@ namespace MergeMessage
 
             var additionalText = FromBranchAdditionalTextBox.Text;
 
-            var mergeMessage = BuildMergeMessage(imputMessageParsingResult.TfsCommitLine, targetBranch, additionalText);
-            ResultTextBox.Text = mergeMessage;
+            var mergeMessages = BuildMergeMessages(imputMessageParsingResult.TfsCommitLines, targetBranch, additionalText);
+            ResultRichTextBox.Text = string.Join(Environment.NewLine, mergeMessages);
 
-            ResetCommitTable(imputMessageParsingResult.TfsCommitLine);
+            ResetCommitTable(imputMessageParsingResult.TfsCommitLines);
         }
 
         private void CopyToClipboardButton_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(ResultTextBox.Text);
+            Clipboard.SetText(ResultRichTextBox.Text);
         }
 
         private void MainForm_Activated(object sender, EventArgs e)
@@ -147,6 +151,17 @@ namespace MergeMessage
             }
         }
 
+        private string[] BuildMergeMessages(IList<ITfsChangeset> parsedInputMessages, IBranch branch, string additionalText)
+        {
+            var builtMergeMessages = new string[parsedInputMessages.Count];
+            for (var i = 0; i < parsedInputMessages.Count; i++)
+            {
+                builtMergeMessages[i] = BuildMergeMessage(parsedInputMessages[i], branch, additionalText);
+            }
+
+            return builtMergeMessages;
+        }
+
         private string BuildMergeMessage(ITfsChangeset parsedInputMessage, IBranch branch, string additionalText)
         {
             return string.Format(_mergeMessageFormat,
@@ -160,20 +175,24 @@ namespace MergeMessage
             return string.Format(branch.Format, additionalText);
         }
 
-        private void ResetCommitTable(ITfsChangeset parsedInputMessage)
+        private void ResetCommitTable(IList<ITfsChangeset> parsedInputMessages)
         {
             CommitTable.Rows.Clear();
 
-            if (parsedInputMessage == null)
+            if (parsedInputMessages == null)
             {
                 Logger.Error("Unable to set message. Parsed message is null.");
                 return;
             }
 
-            CommitTable.Rows.Add(parsedInputMessage.Changeset,
-                parsedInputMessage.User,
-                parsedInputMessage.Date,
-                parsedInputMessage.Comment);
+            foreach (var parsedInputMessage in parsedInputMessages)
+            {
+                CommitTable.Rows.Add(
+                    parsedInputMessage.Changeset,
+                    parsedInputMessage.User,
+                    parsedInputMessage.Date,
+                    parsedInputMessage.Comment);
+            }
         }
 
         private void SetMode(bool isSingle)

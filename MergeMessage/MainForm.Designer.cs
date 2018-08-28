@@ -34,10 +34,12 @@
             this.FromBranchAdditionalLabel = new System.Windows.Forms.Label();
             this.FromBranchAdditionalTextBox = new System.Windows.Forms.TextBox();
             this.CreateButton = new System.Windows.Forms.Button();
-            this.ResultTextBox = new System.Windows.Forms.TextBox();
             this.CopyToClipboardButton = new System.Windows.Forms.Button();
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.MenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SingleModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MultiModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,9 +51,7 @@
             this.ClearButton = new System.Windows.Forms.Button();
             this.ReplaceButton = new System.Windows.Forms.Button();
             this.InputMessageRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.ModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SingleModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MultiModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ResultRichTextBox = new System.Windows.Forms.RichTextBox();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CommitTable)).BeginInit();
             this.SuspendLayout();
@@ -102,7 +102,7 @@
             // 
             // CreateButton
             // 
-            this.CreateButton.Location = new System.Drawing.Point(16, 199);
+            this.CreateButton.Location = new System.Drawing.Point(16, 186);
             this.CreateButton.Name = "CreateButton";
             this.CreateButton.Size = new System.Drawing.Size(75, 23);
             this.CreateButton.TabIndex = 6;
@@ -110,18 +110,9 @@
             this.CreateButton.UseVisualStyleBackColor = true;
             this.CreateButton.Click += new System.EventHandler(this.CreateButton_Click);
             // 
-            // ResultTextBox
-            // 
-            this.ResultTextBox.Location = new System.Drawing.Point(16, 299);
-            this.ResultTextBox.Multiline = true;
-            this.ResultTextBox.Name = "ResultTextBox";
-            this.ResultTextBox.ReadOnly = true;
-            this.ResultTextBox.Size = new System.Drawing.Size(545, 83);
-            this.ResultTextBox.TabIndex = 7;
-            // 
             // CopyToClipboardButton
             // 
-            this.CopyToClipboardButton.Location = new System.Drawing.Point(16, 388);
+            this.CopyToClipboardButton.Location = new System.Drawing.Point(16, 443);
             this.CopyToClipboardButton.Name = "CopyToClipboardButton";
             this.CopyToClipboardButton.Size = new System.Drawing.Size(101, 23);
             this.CopyToClipboardButton.TabIndex = 8;
@@ -136,7 +127,7 @@
             this.HelpToolStripMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Size = new System.Drawing.Size(573, 24);
+            this.MenuStrip.Size = new System.Drawing.Size(643, 24);
             this.MenuStrip.TabIndex = 9;
             this.MenuStrip.Text = "menuStrip1";
             // 
@@ -149,10 +140,35 @@
             this.MenuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.MenuToolStripMenuItem.Text = "Menu";
             // 
+            // ModeToolStripMenuItem
+            // 
+            this.ModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SingleModeToolStripMenuItem,
+            this.MultiModeToolStripMenuItem});
+            this.ModeToolStripMenuItem.Name = "ModeToolStripMenuItem";
+            this.ModeToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.ModeToolStripMenuItem.Text = "Mode";
+            // 
+            // SingleModeToolStripMenuItem
+            // 
+            this.SingleModeToolStripMenuItem.Checked = true;
+            this.SingleModeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.SingleModeToolStripMenuItem.Name = "SingleModeToolStripMenuItem";
+            this.SingleModeToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.SingleModeToolStripMenuItem.Text = "SingleMode";
+            this.SingleModeToolStripMenuItem.Click += new System.EventHandler(this.CurrentModeClick);
+            // 
+            // MultiModeToolStripMenuItem
+            // 
+            this.MultiModeToolStripMenuItem.Name = "MultiModeToolStripMenuItem";
+            this.MultiModeToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.MultiModeToolStripMenuItem.Text = "MultiMode";
+            this.MultiModeToolStripMenuItem.Click += new System.EventHandler(this.CurrentModeClick);
+            // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.ExitToolStripMenuItem.Text = "Exit";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -183,15 +199,14 @@
             this.CommitDateTimeColumn,
             this.CommitMessageColumn});
             this.CommitTable.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.CommitTable.Location = new System.Drawing.Point(16, 229);
+            this.CommitTable.Location = new System.Drawing.Point(16, 215);
             this.CommitTable.MultiSelect = false;
             this.CommitTable.Name = "CommitTable";
             this.CommitTable.ReadOnly = true;
             this.CommitTable.RowHeadersVisible = false;
             this.CommitTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-            this.CommitTable.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.CommitTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.CommitTable.Size = new System.Drawing.Size(545, 64);
+            this.CommitTable.Size = new System.Drawing.Size(615, 112);
             this.CommitTable.TabIndex = 10;
             // 
             // CommitNumberColumn
@@ -220,7 +235,7 @@
             // 
             // ClearButton
             // 
-            this.ClearButton.Location = new System.Drawing.Point(433, 105);
+            this.ClearButton.Location = new System.Drawing.Point(500, 105);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(61, 23);
             this.ClearButton.TabIndex = 11;
@@ -230,7 +245,7 @@
             // 
             // ReplaceButton
             // 
-            this.ReplaceButton.Location = new System.Drawing.Point(500, 105);
+            this.ReplaceButton.Location = new System.Drawing.Point(570, 105);
             this.ReplaceButton.Name = "ReplaceButton";
             this.ReplaceButton.Size = new System.Drawing.Size(61, 23);
             this.ReplaceButton.TabIndex = 13;
@@ -242,46 +257,31 @@
             // 
             this.InputMessageRichTextBox.Location = new System.Drawing.Point(16, 49);
             this.InputMessageRichTextBox.Name = "InputMessageRichTextBox";
-            this.InputMessageRichTextBox.Size = new System.Drawing.Size(545, 50);
+            this.InputMessageRichTextBox.Size = new System.Drawing.Size(615, 50);
             this.InputMessageRichTextBox.TabIndex = 14;
             this.InputMessageRichTextBox.Text = "";
             // 
-            // ModeToolStripMenuItem
+            // ResultRichTextBox
             // 
-            this.ModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SingleModeToolStripMenuItem,
-            this.MultiModeToolStripMenuItem});
-            this.ModeToolStripMenuItem.Name = "ModeToolStripMenuItem";
-            this.ModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.ModeToolStripMenuItem.Text = "Mode";
-            // 
-            // SingleModeToolStripMenuItem
-            // 
-            this.SingleModeToolStripMenuItem.Checked = true;
-            this.SingleModeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.SingleModeToolStripMenuItem.Name = "SingleModeToolStripMenuItem";
-            this.SingleModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.SingleModeToolStripMenuItem.Text = "SingleMode";
-            this.SingleModeToolStripMenuItem.Click += new System.EventHandler(this.CurrentModeClick);
-            // 
-            // MultiModeToolStripMenuItem
-            // 
-            this.MultiModeToolStripMenuItem.Name = "MultiModeToolStripMenuItem";
-            this.MultiModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.MultiModeToolStripMenuItem.Text = "MultiMode";
-            this.MultiModeToolStripMenuItem.Click += new System.EventHandler(this.CurrentModeClick);
+            this.ResultRichTextBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResultRichTextBox.Location = new System.Drawing.Point(16, 333);
+            this.ResultRichTextBox.Name = "ResultRichTextBox";
+            this.ResultRichTextBox.Size = new System.Drawing.Size(615, 104);
+            this.ResultRichTextBox.TabIndex = 15;
+            this.ResultRichTextBox.Text = "";
+            this.ResultRichTextBox.WordWrap = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(573, 422);
+            this.ClientSize = new System.Drawing.Size(643, 478);
+            this.Controls.Add(this.ResultRichTextBox);
             this.Controls.Add(this.InputMessageRichTextBox);
             this.Controls.Add(this.ReplaceButton);
             this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.CommitTable);
             this.Controls.Add(this.CopyToClipboardButton);
-            this.Controls.Add(this.ResultTextBox);
             this.Controls.Add(this.CreateButton);
             this.Controls.Add(this.FromBranchAdditionalTextBox);
             this.Controls.Add(this.FromBranchAdditionalLabel);
@@ -313,7 +313,6 @@
         private System.Windows.Forms.Label FromBranchAdditionalLabel;
         private System.Windows.Forms.TextBox FromBranchAdditionalTextBox;
         private System.Windows.Forms.Button CreateButton;
-        private System.Windows.Forms.TextBox ResultTextBox;
         private System.Windows.Forms.Button CopyToClipboardButton;
         private System.Windows.Forms.MenuStrip MenuStrip;
         private System.Windows.Forms.ToolStripMenuItem MenuToolStripMenuItem;
@@ -331,5 +330,6 @@
         private System.Windows.Forms.ToolStripMenuItem ModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SingleModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MultiModeToolStripMenuItem;
+        private System.Windows.Forms.RichTextBox ResultRichTextBox;
     }
 }
