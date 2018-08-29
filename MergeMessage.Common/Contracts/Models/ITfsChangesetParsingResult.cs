@@ -6,7 +6,7 @@ namespace MergeMessage.Common.Contracts.Models
     {
         IList<string> Errors { get; set; }
 
-        ITfsChangeset TfsCommitLine { get; set; }
+        IList<ITfsChangeset> TfsCommitLines { get; set; }
 
         bool HasErrors { get; }
     }

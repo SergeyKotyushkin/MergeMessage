@@ -1,6 +1,7 @@
 ﻿using System;
 using MergeMessage.Common.Contracts.Models;
 using MergeMessage.Common.Contracts.Repository;
+using MergeMessage.Common.Enums;
 
 namespace MergeMessage.Business.Repository
 {
@@ -15,7 +16,13 @@ namespace MergeMessage.Business.Repository
 
         public IBranch[] Branches { get; private set; }
 
-        public string MergeMessageFormat { get; private set; }
+        public string SingleModeMergeMessageFormat { get; private set; }
+
+        public string MultiModeMergeMessageFormat { get; private set; }
+
+        public string ChangesetNumberFormat { get; private set; }
+
+        public ProgramMode ProgramMode { get; set; }
 
         public void SaveSettings(IProgramSettings settings)
         {
@@ -30,7 +37,10 @@ namespace MergeMessage.Business.Repository
                 _branchRepository.Save(branch);
             }
 
-            MergeMessageFormat = settings.MergeMessageFormat;
+            SingleModeMergeMessageFormat = settings.SingleModeMergeMessageFormat;
+            MultiModeMergeMessageFormat = settings.MultiModeMergeMessageFormat;
+            ChangesetNumberFormat = settings.ChangesetNumberFormat;
+            ProgramMode = settings.ProgramMode;
         }
     }
 }

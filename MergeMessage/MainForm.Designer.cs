@@ -34,7 +34,6 @@
             this.FromBranchAdditionalLabel = new System.Windows.Forms.Label();
             this.FromBranchAdditionalTextBox = new System.Windows.Forms.TextBox();
             this.CreateButton = new System.Windows.Forms.Button();
-            this.ResultTextBox = new System.Windows.Forms.TextBox();
             this.CopyToClipboardButton = new System.Windows.Forms.Button();
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.MenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,13 +41,18 @@
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CommitTable = new System.Windows.Forms.DataGridView();
-            this.CommitNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CommitAuthorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CommitDateTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CommitMessageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ClearButton = new System.Windows.Forms.Button();
             this.ReplaceButton = new System.Windows.Forms.Button();
             this.InputMessageRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.ResultRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.CurrentModeLabel = new System.Windows.Forms.Label();
+            this.SingleModeRadioButton = new System.Windows.Forms.RadioButton();
+            this.MultiModeRadioButton = new System.Windows.Forms.RadioButton();
+            this.CommitNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CommitAuthorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CommitDateTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TaskNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CommitMessageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CommitTable)).BeginInit();
             this.SuspendLayout();
@@ -99,7 +103,7 @@
             // 
             // CreateButton
             // 
-            this.CreateButton.Location = new System.Drawing.Point(16, 199);
+            this.CreateButton.Location = new System.Drawing.Point(16, 186);
             this.CreateButton.Name = "CreateButton";
             this.CreateButton.Size = new System.Drawing.Size(75, 23);
             this.CreateButton.TabIndex = 6;
@@ -107,18 +111,9 @@
             this.CreateButton.UseVisualStyleBackColor = true;
             this.CreateButton.Click += new System.EventHandler(this.CreateButton_Click);
             // 
-            // ResultTextBox
-            // 
-            this.ResultTextBox.Location = new System.Drawing.Point(16, 299);
-            this.ResultTextBox.Multiline = true;
-            this.ResultTextBox.Name = "ResultTextBox";
-            this.ResultTextBox.ReadOnly = true;
-            this.ResultTextBox.Size = new System.Drawing.Size(545, 83);
-            this.ResultTextBox.TabIndex = 7;
-            // 
             // CopyToClipboardButton
             // 
-            this.CopyToClipboardButton.Location = new System.Drawing.Point(16, 388);
+            this.CopyToClipboardButton.Location = new System.Drawing.Point(16, 443);
             this.CopyToClipboardButton.Name = "CopyToClipboardButton";
             this.CopyToClipboardButton.Size = new System.Drawing.Size(101, 23);
             this.CopyToClipboardButton.TabIndex = 8;
@@ -133,7 +128,7 @@
             this.HelpToolStripMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Size = new System.Drawing.Size(573, 24);
+            this.MenuStrip.Size = new System.Drawing.Size(643, 24);
             this.MenuStrip.TabIndex = 9;
             this.MenuStrip.Text = "menuStrip1";
             // 
@@ -177,18 +172,89 @@
             this.CommitNumberColumn,
             this.CommitAuthorColumn,
             this.CommitDateTimeColumn,
+            this.TaskNumberColumn,
             this.CommitMessageColumn});
             this.CommitTable.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.CommitTable.Location = new System.Drawing.Point(16, 229);
+            this.CommitTable.Location = new System.Drawing.Point(16, 215);
             this.CommitTable.MultiSelect = false;
             this.CommitTable.Name = "CommitTable";
             this.CommitTable.ReadOnly = true;
             this.CommitTable.RowHeadersVisible = false;
             this.CommitTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
-            this.CommitTable.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.CommitTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.CommitTable.Size = new System.Drawing.Size(545, 64);
+            this.CommitTable.Size = new System.Drawing.Size(615, 112);
             this.CommitTable.TabIndex = 10;
+            // 
+            // ClearButton
+            // 
+            this.ClearButton.Location = new System.Drawing.Point(500, 105);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(61, 23);
+            this.ClearButton.TabIndex = 11;
+            this.ClearButton.Text = "Clear";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
+            // 
+            // ReplaceButton
+            // 
+            this.ReplaceButton.Location = new System.Drawing.Point(570, 105);
+            this.ReplaceButton.Name = "ReplaceButton";
+            this.ReplaceButton.Size = new System.Drawing.Size(61, 23);
+            this.ReplaceButton.TabIndex = 13;
+            this.ReplaceButton.Text = "Replace";
+            this.ReplaceButton.UseVisualStyleBackColor = true;
+            this.ReplaceButton.Click += new System.EventHandler(this.ReplaceButton_Click);
+            // 
+            // InputMessageRichTextBox
+            // 
+            this.InputMessageRichTextBox.Location = new System.Drawing.Point(16, 49);
+            this.InputMessageRichTextBox.Name = "InputMessageRichTextBox";
+            this.InputMessageRichTextBox.Size = new System.Drawing.Size(615, 50);
+            this.InputMessageRichTextBox.TabIndex = 14;
+            this.InputMessageRichTextBox.Text = "";
+            // 
+            // ResultRichTextBox
+            // 
+            this.ResultRichTextBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResultRichTextBox.Location = new System.Drawing.Point(16, 333);
+            this.ResultRichTextBox.Name = "ResultRichTextBox";
+            this.ResultRichTextBox.Size = new System.Drawing.Size(615, 104);
+            this.ResultRichTextBox.TabIndex = 15;
+            this.ResultRichTextBox.Text = "";
+            this.ResultRichTextBox.WordWrap = false;
+            // 
+            // CurrentModeLabel
+            // 
+            this.CurrentModeLabel.AutoSize = true;
+            this.CurrentModeLabel.Location = new System.Drawing.Point(487, 194);
+            this.CurrentModeLabel.Name = "CurrentModeLabel";
+            this.CurrentModeLabel.Size = new System.Drawing.Size(34, 13);
+            this.CurrentModeLabel.TabIndex = 16;
+            this.CurrentModeLabel.Text = "Mode";
+            // 
+            // SingleModeRadioButton
+            // 
+            this.SingleModeRadioButton.AutoSize = true;
+            this.SingleModeRadioButton.Checked = true;
+            this.SingleModeRadioButton.Location = new System.Drawing.Point(527, 192);
+            this.SingleModeRadioButton.Name = "SingleModeRadioButton";
+            this.SingleModeRadioButton.Size = new System.Drawing.Size(52, 17);
+            this.SingleModeRadioButton.TabIndex = 17;
+            this.SingleModeRadioButton.TabStop = true;
+            this.SingleModeRadioButton.Text = "single";
+            this.SingleModeRadioButton.UseVisualStyleBackColor = true;
+            this.SingleModeRadioButton.CheckedChanged += new System.EventHandler(this.RadioButtonModeChecked);
+            // 
+            // MultiModeRadioButton
+            // 
+            this.MultiModeRadioButton.AutoSize = true;
+            this.MultiModeRadioButton.Location = new System.Drawing.Point(585, 192);
+            this.MultiModeRadioButton.Name = "MultiModeRadioButton";
+            this.MultiModeRadioButton.Size = new System.Drawing.Size(46, 17);
+            this.MultiModeRadioButton.TabIndex = 18;
+            this.MultiModeRadioButton.Text = "multi";
+            this.MultiModeRadioButton.UseVisualStyleBackColor = true;
+            this.MultiModeRadioButton.CheckedChanged += new System.EventHandler(this.RadioButtonModeChecked);
             // 
             // CommitNumberColumn
             // 
@@ -208,51 +274,32 @@
             this.CommitDateTimeColumn.Name = "CommitDateTimeColumn";
             this.CommitDateTimeColumn.ReadOnly = true;
             // 
+            // TaskNumberColumn
+            // 
+            this.TaskNumberColumn.HeaderText = "Task";
+            this.TaskNumberColumn.Name = "TaskNumberColumn";
+            this.TaskNumberColumn.ReadOnly = true;
+            // 
             // CommitMessageColumn
             // 
             this.CommitMessageColumn.HeaderText = "Comment";
             this.CommitMessageColumn.Name = "CommitMessageColumn";
             this.CommitMessageColumn.ReadOnly = true;
             // 
-            // ClearButton
-            // 
-            this.ClearButton.Location = new System.Drawing.Point(433, 105);
-            this.ClearButton.Name = "ClearButton";
-            this.ClearButton.Size = new System.Drawing.Size(61, 23);
-            this.ClearButton.TabIndex = 11;
-            this.ClearButton.Text = "Clear";
-            this.ClearButton.UseVisualStyleBackColor = true;
-            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
-            // 
-            // ReplaceButton
-            // 
-            this.ReplaceButton.Location = new System.Drawing.Point(500, 105);
-            this.ReplaceButton.Name = "ReplaceButton";
-            this.ReplaceButton.Size = new System.Drawing.Size(61, 23);
-            this.ReplaceButton.TabIndex = 13;
-            this.ReplaceButton.Text = "Replace";
-            this.ReplaceButton.UseVisualStyleBackColor = true;
-            this.ReplaceButton.Click += new System.EventHandler(this.ReplaceButton_Click);
-            // 
-            // InputMessageTextBox
-            // 
-            this.InputMessageRichTextBox.Location = new System.Drawing.Point(16, 49);
-            this.InputMessageRichTextBox.Name = "InputMessageRichTextBox";
-            this.InputMessageRichTextBox.Size = new System.Drawing.Size(545, 50);
-            this.InputMessageRichTextBox.TabIndex = 14;
-            this.InputMessageRichTextBox.Text = "";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(573, 422);
+            this.ClientSize = new System.Drawing.Size(643, 478);
+            this.Controls.Add(this.MultiModeRadioButton);
+            this.Controls.Add(this.SingleModeRadioButton);
+            this.Controls.Add(this.CurrentModeLabel);
+            this.Controls.Add(this.ResultRichTextBox);
             this.Controls.Add(this.InputMessageRichTextBox);
             this.Controls.Add(this.ReplaceButton);
             this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.CommitTable);
             this.Controls.Add(this.CopyToClipboardButton);
-            this.Controls.Add(this.ResultTextBox);
             this.Controls.Add(this.CreateButton);
             this.Controls.Add(this.FromBranchAdditionalTextBox);
             this.Controls.Add(this.FromBranchAdditionalLabel);
@@ -284,7 +331,6 @@
         private System.Windows.Forms.Label FromBranchAdditionalLabel;
         private System.Windows.Forms.TextBox FromBranchAdditionalTextBox;
         private System.Windows.Forms.Button CreateButton;
-        private System.Windows.Forms.TextBox ResultTextBox;
         private System.Windows.Forms.Button CopyToClipboardButton;
         private System.Windows.Forms.MenuStrip MenuStrip;
         private System.Windows.Forms.ToolStripMenuItem MenuToolStripMenuItem;
@@ -292,12 +338,17 @@
         private System.Windows.Forms.ToolStripMenuItem HelpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
         private System.Windows.Forms.DataGridView CommitTable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CommitNumberColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CommitAuthorColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CommitDateTimeColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CommitMessageColumn;
         private System.Windows.Forms.Button ClearButton;
         private System.Windows.Forms.Button ReplaceButton;
         private System.Windows.Forms.RichTextBox InputMessageRichTextBox;
+        private System.Windows.Forms.RichTextBox ResultRichTextBox;
+        private System.Windows.Forms.Label CurrentModeLabel;
+        private System.Windows.Forms.RadioButton SingleModeRadioButton;
+        private System.Windows.Forms.RadioButton MultiModeRadioButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CommitNumberColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CommitAuthorColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CommitDateTimeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TaskNumberColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CommitMessageColumn;
     }
 }
