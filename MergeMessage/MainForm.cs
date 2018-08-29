@@ -147,6 +147,11 @@ namespace MergeMessage
             SetMode(mode);
         }
 
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _mAlertService.Alert(new AlertEntity("About", "An application that creates message for merge", AlertType.None));
+        }
+
         private void PasteCopiedText()
         {
             var copiedText = Clipboard.GetText().Trim();
