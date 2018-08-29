@@ -10,12 +10,14 @@ namespace MergeMessage.Common.Models
             string singleModeMergeMessageFormat, 
             string multiModeMergeMessageFormat, 
             string changesetNumberFormat, 
+            string changesetTaskPrefix, 
             ProgramMode programMode = ProgramMode.Single)
         {
             Branches = branches;
             SingleModeMergeMessageFormat = singleModeMergeMessageFormat;
             MultiModeMergeMessageFormat = multiModeMergeMessageFormat;
             ChangesetNumberFormat = changesetNumberFormat;
+            ChangesetTaskPrefix = changesetTaskPrefix;
             ProgramMode = programMode;
         }
 
@@ -26,6 +28,8 @@ namespace MergeMessage.Common.Models
         public string MultiModeMergeMessageFormat { get; }
 
         public string ChangesetNumberFormat { get; }
+
+        public string ChangesetTaskPrefix { get; }
 
         public ProgramMode ProgramMode { get; }
     }

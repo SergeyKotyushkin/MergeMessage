@@ -4,6 +4,7 @@ using System.Linq;
 using log4net;
 
 using MergeMessage.Common.Contracts.Models;
+using MergeMessage.Common.Contracts.Repository;
 using MergeMessage.Common.Contracts.Services;
 using MergeMessage.Common.Models;
 
@@ -12,6 +13,13 @@ namespace MergeMessage.Business.Services
     public class TfsChangesetParsingService : ITfsChangesetParsingService
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TfsChangesetParsingService));
+
+        private readonly IProgramSettingsRepository _programSettingsRepository;
+
+        public TfsChangesetParsingService(IProgramSettingsRepository programSettingsRepository)
+        {
+            _programSettingsRepository = programSettingsRepository;
+        }
 
         public ITfsChangesetParsingResult Parse(string inputMessagesData)
         {
@@ -87,7 +95,8 @@ namespace MergeMessage.Business.Services
             
             if (inputMessageSplits.Length > 3)
             {
-                var commitMessageNumberIndex = inputMessageSplits[3].IndexOf("VW-", StringComparison.InvariantCulture);
+                var taskPrefix = _programSettingsRepository.ChangesetTaskPrefix;
+                var commitMessageNumberIndex = inputMessageSplits[3].IndexOf(taskPrefix, StringComparison.InvariantCulture);
                 if (commitMessageNumberIndex == -1)
                 {
                     errorMessage = "could not find a Commit Message Number from the Input Message";

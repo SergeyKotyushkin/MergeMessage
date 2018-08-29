@@ -13,6 +13,8 @@ namespace MergeMessage.Common.Contracts.Repository
 
         string ChangesetNumberFormat { get; }
 
+        string ChangesetTaskPrefix { get; }
+
         ProgramMode ProgramMode { get; set; }
 
         void SaveSettings(IProgramSettings settings);

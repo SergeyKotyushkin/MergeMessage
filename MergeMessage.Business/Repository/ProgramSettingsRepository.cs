@@ -22,6 +22,8 @@ namespace MergeMessage.Business.Repository
 
         public string ChangesetNumberFormat { get; private set; }
 
+        public string ChangesetTaskPrefix { get; private set; }
+
         public ProgramMode ProgramMode { get; set; }
 
         public void SaveSettings(IProgramSettings settings)
@@ -40,6 +42,7 @@ namespace MergeMessage.Business.Repository
             SingleModeMergeMessageFormat = settings.SingleModeMergeMessageFormat;
             MultiModeMergeMessageFormat = settings.MultiModeMergeMessageFormat;
             ChangesetNumberFormat = settings.ChangesetNumberFormat;
+            ChangesetTaskPrefix = settings.ChangesetTaskPrefix;
             ProgramMode = settings.ProgramMode;
         }
     }

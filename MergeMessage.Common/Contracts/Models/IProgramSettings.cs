@@ -12,6 +12,8 @@ namespace MergeMessage.Common.Contracts.Models
 
         string ChangesetNumberFormat { get; }
 
+        string ChangesetTaskPrefix { get; }
+
         ProgramMode ProgramMode { get; }
     }
 }
