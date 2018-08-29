@@ -16,6 +16,7 @@ The *settings.ini* file can contain next settings:
     Specifies a list of available branches.
     Each branch must be defined with on line in the settings. 
     It must have next format: `Branch:BranchName,BranchFromat[,BranchAdditional]`
+    
     Where: 
     - `Branch:` - special prefix for the Branch setting
     - `BranchName` - a name of the branch in the drop down list in the application
@@ -30,6 +31,7 @@ The *settings.ini* file can contain next settings:
 2. SingleModeMessageFormat
     Defines a format for the result merge message in a *Single* mode.
     It must have next format: `SingleModeMessageFormat:MessageFormat`
+    
     Where: 
     - `SingleModeMessageFormat:` - special prefix for the SingleModeMessageFormat setting
     - `MessageFormat` - a format for the result merge message in a *Single* mode
@@ -43,7 +45,7 @@ The *settings.ini* file can contain next settings:
     - `{2}` - will be replaced by a changeset commit message
     
     The settings can contain many SingleModeMessageFormat counfigurations but only first wil be used.
-2. MultiModeMessageFormat
+3. MultiModeMessageFormat
     Defines a format for the result merge message in a *Multi* mode.
     It must have next format: `MultiModeMessageFormat:MessageFormat`
     Where: 
@@ -59,9 +61,10 @@ The *settings.ini* file can contain next settings:
     - `{2}` - will be replaced by a changeset task numbers joined with comma
     
     The settings can contain many MultiModeMessageFormat counfigurations but only first wil be used.
-2. ChangesetNumberFormat
+4. ChangesetNumberFormat
     Defines a format for the changeset number in the result merge message for the both modes.
     It must have next format: `ChangesetNumberFormat:ChangesetNumberFormat`
+    
     Where: 
     - `ChangesetNumberFormat:` - special prefix for the ChangesetNumberFormat setting
     - `ChangesetNumberFormat` - a format for the changeset number in the result merge message for the both modes
@@ -73,6 +76,18 @@ The *settings.ini* file can contain next settings:
     - `{0}` - will be replaced by a changeset number
     
     The settings can contain many ChangesetNumberFormat counfigurations but only first wil be used.
+5. ChangesetTaskPrefix
+    Defines a task prefix.
+    It must have next format: `ChangesetTaskPrefix:ChangesetTaskPrefix`
+    
+    Where: 
+    - `ChangesetTaskPrefix:` - special prefix for the ChangesetTaskPrefix setting
+    - `ChangesetTaskPrefix` - a task prefix
+    
+    ChangesetTaskPrefix configuration example: 
+    - `ChangesetTaskPrefix:Task`
+    
+    The settings can contain many ChangesetTaskPrefix counfigurations but only first wil be used.
 
 
 # Modes
