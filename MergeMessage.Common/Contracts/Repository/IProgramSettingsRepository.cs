@@ -1,4 +1,5 @@
 ﻿using MergeMessage.Common.Contracts.Models;
+using MergeMessage.Common.Enums;
 
 namespace MergeMessage.Common.Contracts.Repository
 {
@@ -6,7 +7,13 @@ namespace MergeMessage.Common.Contracts.Repository
     {
         IBranch[] Branches { get; }
 
-        string MergeMessageFormat { get; }
+        string SingleModeMergeMessageFormat { get; }
+
+        string MultiModeMergeMessageFormat { get; }
+
+        string ChangesetNumberFormat { get; }
+
+        ProgramMode ProgramMode { get; set; }
 
         void SaveSettings(IProgramSettings settings);
     }

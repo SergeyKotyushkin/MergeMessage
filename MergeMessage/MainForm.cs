@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 using log4net;
@@ -15,29 +17,34 @@ namespace MergeMessage
     public partial class MainForm : Form
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainForm));
-        private readonly string _mergeMessageFormat;
 
         private readonly ITfsChangesetParsingService _mTfsChangesetParsingService;
         private readonly IBranchRepository _mBranchRepository;
         private readonly IAlertService _mAlertService;
+        private readonly IProgramSettingsRepository _programSettingsRepository;
+        private readonly IBuildMergeMessageService _buildMergeMessageService;
 
         public MainForm(
             ITfsChangesetParsingService mTfsChangesetParsingService, 
             IBranchRepository mBranchRepository, 
             IAlertService mAlertService, 
-            IProgramSettingsRepository programSettingsRepository)
+            IProgramSettingsRepository programSettingsRepository, 
+            IBuildMergeMessageService buildMergeMessageService)
         {
             _mTfsChangesetParsingService = mTfsChangesetParsingService;
             _mBranchRepository = mBranchRepository;
             _mAlertService = mAlertService;
-
-            _mergeMessageFormat = programSettingsRepository.MergeMessageFormat;
+            _programSettingsRepository = programSettingsRepository;
+            _buildMergeMessageService = buildMergeMessageService;
 
             InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Text = GetTitle();
+            SetMode(ProgramMode.Single);
+
             var branches = _mBranchRepository.GetAll();
             if (branches.Length > 0)
             {
@@ -64,12 +71,15 @@ namespace MergeMessage
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
+            ResultRichTextBox.Text = string.Empty;
+            CommitTable.Rows.Clear();
+
             var imputMessageParsingResult = _mTfsChangesetParsingService.Parse(InputMessageRichTextBox.Text);
             if (imputMessageParsingResult.HasErrors)
             {
                 var errorsForMessage = string.Join(Environment.NewLine, imputMessageParsingResult.Errors);
                 var errorMessage =
-                    $"Some errors have been occured on parsing input message:{Environment.NewLine}{errorsForMessage}";
+                    $"Some errors have been occured on parsing input message.{Environment.NewLine}{Environment.NewLine}{errorsForMessage}";
                 Logger.Warn(errorMessage);
                 _mAlertService.Alert(new AlertEntity("Error", errorMessage, AlertType.Error));
                 return;
@@ -87,15 +97,15 @@ namespace MergeMessage
 
             var additionalText = FromBranchAdditionalTextBox.Text;
 
-            var mergeMessage = BuildMergeMessage(imputMessageParsingResult.TfsCommitLine, targetBranch, additionalText);
-            ResultTextBox.Text = mergeMessage;
+            var mergeMessages = _buildMergeMessageService.Build(imputMessageParsingResult.TfsCommitLines, targetBranch, additionalText);
+            ResultRichTextBox.Text = string.Join(Environment.NewLine, mergeMessages);
 
-            ResetCommitTable(imputMessageParsingResult.TfsCommitLine);
+            ResetCommitTable(imputMessageParsingResult.TfsCommitLines);
         }
 
         private void CopyToClipboardButton_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(ResultTextBox.Text);
+            Clipboard.SetText(ResultRichTextBox.Text);
         }
 
         private void MainForm_Activated(object sender, EventArgs e)
@@ -124,6 +134,19 @@ namespace MergeMessage
             PasteCopiedText();
         }
 
+        private void RadioButtonModeChecked(object sender, EventArgs e)
+        {
+            var radioButton = sender as RadioButton;
+            if (radioButton == null || !radioButton.Checked)
+            {
+                return;
+            }
+
+            var isSingle = radioButton == SingleModeRadioButton;
+            var mode = isSingle ? ProgramMode.Single : ProgramMode.Multi;
+            SetMode(mode);
+        }
+
         private void PasteCopiedText()
         {
             var copiedText = Clipboard.GetText().Trim();
@@ -133,33 +156,57 @@ namespace MergeMessage
             }
         }
 
-        private string BuildMergeMessage(ITfsChangeset parsedInputMessage, IBranch branch, string additionalText)
-        {
-            return string.Format(_mergeMessageFormat,
-                parsedInputMessage.Changeset,
-                BuildBranchPartMessage(branch, additionalText),
-                parsedInputMessage.Comment);
-        }
-
-        private string BuildBranchPartMessage(IBranch branch, string additionalText)
-        {
-            return string.Format(branch.Format, additionalText);
-        }
-
-        private void ResetCommitTable(ITfsChangeset parsedInputMessage)
+        private void ResetCommitTable(IList<ITfsChangeset> parsedInputMessages)
         {
             CommitTable.Rows.Clear();
 
-            if (parsedInputMessage == null)
+            if (parsedInputMessages == null)
             {
                 Logger.Error("Unable to set message. Parsed message is null.");
                 return;
             }
 
-            CommitTable.Rows.Add(parsedInputMessage.Changeset,
-                parsedInputMessage.User,
-                parsedInputMessage.Date,
-                parsedInputMessage.Comment);
+            foreach (var parsedInputMessage in parsedInputMessages)
+            {
+                CommitTable.Rows.Add(
+                    parsedInputMessage.ChangesetNumber,
+                    parsedInputMessage.User,
+                    parsedInputMessage.Date,
+                    parsedInputMessage.TaskNumber,
+                    parsedInputMessage.Comment);
+            }
+        }
+
+        private void SetMode(ProgramMode mode)
+        {
+            _programSettingsRepository.ProgramMode = mode;
+
+            if (mode == ProgramMode.Single)
+            {
+                SingleModeRadioButton.Checked = true;
+            }
+            else
+            {
+                MultiModeRadioButton.Checked = true;
+            }
+        }
+
+        private string GetTitle()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            return $"{GetAssemblyTitle(assembly)} v{GetAssemblyVersion(assembly)}";
+        }
+
+        private string GetAssemblyTitle(Assembly assembly)
+        {
+            var assemblyTitleAttribute =
+                (AssemblyTitleAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyTitleAttribute), false);
+            return assemblyTitleAttribute?.Title ?? "Merge Message";
+        }
+
+        private string GetAssemblyVersion(Assembly assembly)
+        {
+            return assembly.GetName().Version.ToString();
         }
     }
 }
