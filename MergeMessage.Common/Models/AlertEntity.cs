@@ -40,6 +40,7 @@ namespace MergeMessage.Common.Models
                 case AlertType.Error:
                     IsError = true;
                     break;
+                default: break;
             }
         }
     }

@@ -17,10 +17,12 @@ namespace MergeMessage.Business.Services
         private const string SingleModeMergeMessageFormatSettingPrefix = "SingleModeMessageFormat:";
         private const string MultiModeMergeMessageFormatSettingPrefix = "MultiModeMessageFormat:";
         private const string ChangesetNumberFormatSettingPrefix = "ChangesetNumberFormat:";
+        private const string ChangesetTaskPrefixSettingPrefix = "ChangesetTaskPrefix:";
 
         private const string DefaultSingleModeMergeMessageFormat = "Merged {0} from {1} for {2}";
         private const string DefaultMultiModeMergeMessageFormat = "Merged {0} from {1} for {2}";
         private const string DefaultChangesetNumberFormat = "#{0}";
+        private const string DefaultChangesetTaskPrefix = "";
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(SettingsService));
 
@@ -48,12 +50,16 @@ namespace MergeMessage.Business.Services
             var changesetNumberFormat =
                 ParseStringLineSetting(settingsLinesArray, ChangesetNumberFormatSettingPrefix) ??
                 DefaultChangesetNumberFormat;
+            var changesetTaskPrefix =
+                ParseStringLineSetting(settingsLinesArray, ChangesetTaskPrefixSettingPrefix) ??
+                DefaultChangesetTaskPrefix;
 
             return new ProgramSettings(
                 branches,
                 singleModeMergeMessageFormat,
                 multiModeMergeMessageFormat,
-                changesetNumberFormat);
+                changesetNumberFormat,
+                changesetTaskPrefix);
         }
 
         private static IEnumerable<string> TryReadSettingsFile(string filePath, out string errorMessage)
