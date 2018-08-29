@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 using log4net;
@@ -41,7 +42,9 @@ namespace MergeMessage
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Text = GetTitle();
             SetMode(ProgramMode.Single);
+
             var branches = _mBranchRepository.GetAll();
             if (branches.Length > 0)
             {
@@ -186,6 +189,24 @@ namespace MergeMessage
             {
                 MultiModeRadioButton.Checked = true;
             }
+        }
+
+        private string GetTitle()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            return $"{GetAssemblyTitle(assembly)} v{GetAssemblyVersion(assembly)}";
+        }
+
+        private string GetAssemblyTitle(Assembly assembly)
+        {
+            var assemblyTitleAttribute =
+                (AssemblyTitleAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyTitleAttribute), false);
+            return assemblyTitleAttribute?.Title ?? "Merge Message";
+        }
+
+        private string GetAssemblyVersion(Assembly assembly)
+        {
+            return assembly.GetName().Version.ToString();
         }
     }
 }

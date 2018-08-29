@@ -41,6 +41,11 @@
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CommitTable = new System.Windows.Forms.DataGridView();
+            this.CommitNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CommitAuthorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CommitDateTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TaskNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CommitMessageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ClearButton = new System.Windows.Forms.Button();
             this.ReplaceButton = new System.Windows.Forms.Button();
             this.InputMessageRichTextBox = new System.Windows.Forms.RichTextBox();
@@ -48,11 +53,6 @@
             this.CurrentModeLabel = new System.Windows.Forms.Label();
             this.SingleModeRadioButton = new System.Windows.Forms.RadioButton();
             this.MultiModeRadioButton = new System.Windows.Forms.RadioButton();
-            this.CommitNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CommitAuthorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CommitDateTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TaskNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CommitMessageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CommitTable)).BeginInit();
             this.SuspendLayout();
@@ -185,6 +185,36 @@
             this.CommitTable.Size = new System.Drawing.Size(615, 112);
             this.CommitTable.TabIndex = 10;
             // 
+            // CommitNumberColumn
+            // 
+            this.CommitNumberColumn.HeaderText = "Changeset";
+            this.CommitNumberColumn.Name = "CommitNumberColumn";
+            this.CommitNumberColumn.ReadOnly = true;
+            // 
+            // CommitAuthorColumn
+            // 
+            this.CommitAuthorColumn.HeaderText = "User";
+            this.CommitAuthorColumn.Name = "CommitAuthorColumn";
+            this.CommitAuthorColumn.ReadOnly = true;
+            // 
+            // CommitDateTimeColumn
+            // 
+            this.CommitDateTimeColumn.HeaderText = "Date";
+            this.CommitDateTimeColumn.Name = "CommitDateTimeColumn";
+            this.CommitDateTimeColumn.ReadOnly = true;
+            // 
+            // TaskNumberColumn
+            // 
+            this.TaskNumberColumn.HeaderText = "Task";
+            this.TaskNumberColumn.Name = "TaskNumberColumn";
+            this.TaskNumberColumn.ReadOnly = true;
+            // 
+            // CommitMessageColumn
+            // 
+            this.CommitMessageColumn.HeaderText = "Comment";
+            this.CommitMessageColumn.Name = "CommitMessageColumn";
+            this.CommitMessageColumn.ReadOnly = true;
+            // 
             // ClearButton
             // 
             this.ClearButton.Location = new System.Drawing.Point(500, 105);
@@ -256,36 +286,6 @@
             this.MultiModeRadioButton.UseVisualStyleBackColor = true;
             this.MultiModeRadioButton.CheckedChanged += new System.EventHandler(this.RadioButtonModeChecked);
             // 
-            // CommitNumberColumn
-            // 
-            this.CommitNumberColumn.HeaderText = "Changeset";
-            this.CommitNumberColumn.Name = "CommitNumberColumn";
-            this.CommitNumberColumn.ReadOnly = true;
-            // 
-            // CommitAuthorColumn
-            // 
-            this.CommitAuthorColumn.HeaderText = "User";
-            this.CommitAuthorColumn.Name = "CommitAuthorColumn";
-            this.CommitAuthorColumn.ReadOnly = true;
-            // 
-            // CommitDateTimeColumn
-            // 
-            this.CommitDateTimeColumn.HeaderText = "Date";
-            this.CommitDateTimeColumn.Name = "CommitDateTimeColumn";
-            this.CommitDateTimeColumn.ReadOnly = true;
-            // 
-            // TaskNumberColumn
-            // 
-            this.TaskNumberColumn.HeaderText = "Task";
-            this.TaskNumberColumn.Name = "TaskNumberColumn";
-            this.TaskNumberColumn.ReadOnly = true;
-            // 
-            // CommitMessageColumn
-            // 
-            this.CommitMessageColumn.HeaderText = "Comment";
-            this.CommitMessageColumn.Name = "CommitMessageColumn";
-            this.CommitMessageColumn.ReadOnly = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -312,7 +312,6 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Merge Message v1.0.0.0";
             this.Activated += new System.EventHandler(this.MainForm_Activated);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.MenuStrip.ResumeLayout(false);
