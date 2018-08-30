@@ -96,3 +96,18 @@ It is available two modes:
     For each input messages pasted in the input text box will be generated separete merge message with a full changeset commit message.
 2. Multi
     For all input messages pasted in the input text box will be generated only one merge message with changeset task numbers.
+
+
+# Usage instructions
+1. Open Visual Studio
+2. Open the Source Control Explorer
+3. Chose a necessary branch
+4. Click Merge on the chosen branch
+5. Chose a target branch
+6. Copy full line of a changeset (or the few lines of the few changesets) for mergering on the step of selection changesets for mergering
+7. Run the MergeMessage application
+8. Paste copied changeset line into the Input Message text box
+9. From the From Branch drop down chose a branch for which you want mergering
+10. Chose a necessary Mode
+11. Click Create
+12. Get generated merge message in the Result text box
